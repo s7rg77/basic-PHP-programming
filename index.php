@@ -6,9 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>basic PHP programming</title>
     <style>
+        html,
         body {
             margin: 0px;
             padding: 0px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        body {
             background-color: black;
             color: #00FF00;
             font-family: monospace;
@@ -22,11 +29,16 @@
             font-weight: normal;
         }
 
-        #head {
+        header {
             margin-top: 10px;
             margin-right: 10px;
             display: flex;
             justify-content: flex-end;
+        }
+
+        main {
+            margin-bottom: 10px;
+            flex: 1;
         }
 
         .home,
@@ -61,16 +73,15 @@
         }
 
         table {
-            margin: 10px;
+            margin-top: 10px;
+            margin-left: 10px;
         }
 
         footer {
-            bottom: 0px;
             width: 100%;
             background-color: #006400;
             color: #00FF00;
             text-align: center;
-            position: fixed;
         }
     </style>
     <script>
@@ -95,62 +106,66 @@
 </head>
 
 <body>
-    <div id="head">
+    <header>
         <button class="doc" onclick="goDoc()">doc</button>
         <button class="git" onclick="goGit()">git</button>
         <button class="home" onclick="goHome()">back</button>
-    </div>
-    <h1>basic PHP programming</h1>
-    <h2>sergio lópez</h2>
-    <?php
-    echo '<form method="post" action="' . htmlentities($_SERVER['PHP_SELF']) . '">';
-    echo '<label for="valor">introduce un valor (0-10):</label><br>';
-    echo '<input type="text" id="valor" name="valor"><br>';
-    echo '<button type="submit">enviar</button><br>';
-    echo "</form>";
-    function generarArray($valor)
-    {
-        $numeros = array();
-        for ($valor; $valor >= 0; $valor -= 3) {
-            $numeros[] = $valor;
-        }
-        return $numeros;
-    }
-    function tabla($valores)
-    {
-        $html = '<table border="1">';
-        $html .= "<tr><th>array</th></tr>";
-        foreach ($valores as $valor) {
-            $html .= "<tr><td>" . $valor . "</td></tr>";
-        }
-        $html .= "</table>";
-        return $html;
-    }
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $valor = isset($_POST["valor"]) ? $_POST["valor"] : '';
-        switch (true) {
-            case !is_numeric($valor):
-                echo "<p>introduce un valor numérico</p>";
-                break;
-            case $valor < 0:
-                echo "<p>introduce un valor positivo</p>";
-                break;
-            case $valor <= 10 || $valor == 0:
-                $valores = generarArray($valor);
-                echo tabla($valores);
-                break;
-            case $valor > 10:
-                echo "<p>número demasiado grande</p>";
-                break;
-            default:
-                echo "<p>valor desconocido</p>";
-        }
-    }
-    ?>
-</body>
+    </header>
 
-<footer>
-    <h3>desarrollo web entorno servidor</h3>
-</footer>
+    <main>
+        <h1>basic PHP programming</h1>
+        <h2>sergio lópez</h2>
+        <?php
+            echo '<form method="post" action="' . htmlentities($_SERVER['PHP_SELF']) . '">';
+            echo '<label for="valor">introduce un valor (0-10):</label><br>';
+            echo '<input type="text" id="valor" name="valor"><br>';
+            echo '<button type="submit">enviar</button><br>';
+            echo "</form>";
+            function generarArray($valor)
+            {
+                $numeros = array();
+                for ($valor; $valor >= 0; $valor -= 3) {
+                    $numeros[] = $valor;
+                }
+                return $numeros;
+            }
+            function tabla($valores)
+            {
+                $html = '<table border="1">';
+                $html .= "<tr><th>array</th></tr>";
+                foreach ($valores as $valor) {
+                    $html .= "<tr><td>" . $valor . "</td></tr>";
+                }
+                $html .= "</table>";
+                return $html;
+            }
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                $valor = isset($_POST["valor"]) ? $_POST["valor"] : '';
+                switch (true) {
+                    case !is_numeric($valor):
+                        echo "<p>introduce un valor numérico</p>";
+                        break;
+                    case $valor < 0:
+                        echo "<p>introduce un valor positivo</p>";
+                        break;
+                    case $valor <= 10 || $valor == 0:
+                        $valores = generarArray($valor);
+                        echo tabla($valores);
+                        break;
+                    case $valor > 10:
+                        echo "<p>número demasiado grande</p>";
+                        break;
+                    default:
+                        echo "<p>valor desconocido</p>";
+                }
+            }
+        ?>
+    </main>
+
+    <footer>
+        <h3>desarrollo web entorno servidor</h3>
+    </footer>
+
+</body>
 
 </html>
